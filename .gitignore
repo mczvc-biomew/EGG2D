@@ -2,6 +2,7 @@
 # Folders
 /.idea/
 /CMakeFiles/
+/src/EGG/CMakeFiles/
 /.cmake/
 /Testing/Temporary/
 /lib/
