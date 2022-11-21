@@ -4,7 +4,7 @@ libdir=${exec_prefix}/lib@LIB_SUFFIX@
 includeddir=${prefix}/include
 
 Name: EGG-all
-Description:
-URL:
+Description: The easy, modern, fast Game Graphics library, all modules.
+URL: https://github.com/mczvc827/EGG2D
 Version: @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@
 Requires: glad
