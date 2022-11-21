@@ -16,4 +16,4 @@ Meldencio Czarlemagne Veras Corrales</br>
 
 ## Other Contributions ##
 
-EGG is an open-source project, and currently on planning stage. You can help this library to grow and improve. If you want to get involve and suggest some additional features, file a bug report or submit a patch, please have a look at the [contribution guidelines](https://github.com/mczvc827/contributing.md)
+EGG is an open-source project, and currently on planning stage. You can help this library to grow and improve. If you want to get involve and suggest some additional features, file a bug report or submit a patch, please have a look at the [contribution guidelines](https://github.com/mczvc827/EGG2D/blob/main/contributing.md)
