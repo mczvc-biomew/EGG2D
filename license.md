@@ -10,7 +10,7 @@ Permission is granted to anyone to use this software for any purpose, including 
   2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
-## External libraries used by SFML
+## External libraries used by EGG
 
   * GLAD is under [MIT license](https://github.com/Dav1dde/glad/blob/glad2/LICENSE) (see Khronos)
   * SDL 2.0 is under [zlib license](https://www.zlib.net/zlib_license.html)
