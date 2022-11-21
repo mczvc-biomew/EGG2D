@@ -1,0 +1,57 @@
+# This script provides the EGG libraries as imported targets
+# ------------------------------------
+#
+# Usage
+# -----
+#
+
+set(FIND_EGG_PATHS
+    "${CMAKE_CURRENT_LIST_DIR}/../.."
+    ${EGG_ROOT}
+    $ENV{EGG_ROOT}
+    ~/Library/Frameworks
+    /Library/Frameworks
+    /usr/local
+    /usr
+    /sw
+    /opt/local
+    /opt/csw
+    /opt)
+
+# Update requested components (eg. request window component if graphics component was requested)
+set(FIND_EGG_SYSTEM_DEPENDENCIES "")
+set(FIND_EGG_MAIN_DEPENDENCIES "")
+set(FIND_EGG_ADDITIONAL_COMPONENTS "")
+foreach(component ${EGG_FIND_COMPONENTS})
+    string(TOUPPER "${component}" UPPER_COMPONENT)
+    list(APPEND FIND_EGG_ADDITIONAL_COMPONENTS ${FIND_EGG_${UPPER_COMPONENT}_DEPENDENCIES})
+endforeach()
+list(APPEND EGG_FIND_COMPONENTS ${FIND_EGG_ADDITIONAL_COMPONENTS})
+list(REMOVE_DUPLICATES EGG_FIND_COMPONENTS)
+
+
+set(config_name "Static")
+
+set(targets_config_file "${CMAKE_CURRENT_LIST_DIR}/EGG${config_name}Targets.cmake")
+
+if (EXISTS "${targets_config_file}")
+    message("Found")
+    set(EGG_FOUND TRUE)
+    include("${targets_config_file}")
+else()
+    message("Not found ${targets_config_file}")
+endif()
+
+if (NOT EGG_FOUND)
+    if(EGG_FIND_REQUIRED)
+        # fatal error
+        message(FATAL_ERROR "${FIND_EGG_ERROR}")
+    elseif(NOT EGG_FIND_QUIETLY)
+        # error but continue
+        message(STATUS "${FIND_EGG_ERROR}")
+    endif()
+endif()
+
+if (EGG_FOUND AND NOT EGG_FIND_QUIETLY)
+    message(STATUS "Found EGG @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@ in ${CMAKE_CURRENT_LIST_DIR}")
+endif()
