@@ -44,7 +44,7 @@ elseif(EGG_OS_LINUX)
 elseif(EGG_OS_MACOSX)
 	set(DEFAULT_INSTALL_MISC_DIR /usr/local/share/EGG)
 elseif(EGG_OS_ANDROID)
-    set(DEFAULT_ISNTALL_MISC_DIR ${CMAKE_ANDROID_NDK}/sources/third_party/egg)
+    set(DEFAULT_INSTALL_MISC_DIR ${CMAKE_ANDROID_NDK}/sources/third_party/egg)
 endif()
 
 egg_set_option(EGG_MISC_INSTALL_PREFIX "${DEFAULT_INSTALL_MISC_DIR}" PATH "Prefix installation path for miscellaneous files")
@@ -68,10 +68,12 @@ if(EGG_OS_LINUX)
     set(EGG_INSTALL_PKGCONFIG_DEFAULT TRUE)
 endif()
 
-egg_set_option(EGG_INSTALL_PKGCONFIG_FILES ${EGG_INSTALL_PKGCONFIG_DEFAULT} BOOL "TRUE to automatically install pkg-config files so other projects can find EGG")
+egg_set_option(EGG_INSTALL_PKGCONFIG_FILES ${EGG_INSTALL_PKGCONFIG_DEFAULT} BOOL
+        "TRUE to automatically install pkg-config files so other projects can find EGG")
 
 if(EGG_INSTALL_PKGCONFIG_FILES)
-    egg_set_option(EGG_PKGCONFIG_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/${EGG_PKGCONFIG_DIR}" PATH "Install directory for EGG's pkg-config .pc files")
+    egg_set_option(EGG_PKGCONFIG_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/${EGG_PKGCONFIG_DIR}" PATH
+            "Install directory for EGG's pkg-config .pc files")
 
     CONFIGURE_FILE(
         "tools/pkg-config/egg-all.pc.in"

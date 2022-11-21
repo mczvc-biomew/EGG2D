@@ -57,7 +57,7 @@ macro(egg_add_library target)
     set_target_properties(${target} PROPERTIES FOLDER "EGG")
 
     # set the target flags to use the appropriate C++ standard library
-    EGG_set_stdlib(${target})
+    egg_set_stdlib(${target})
 
     # For Visual Studio on Windows, export debug symbols (PDB files) to lib directory
     if(EGG_GENERATE_PDB)
@@ -83,7 +83,9 @@ macro(egg_add_library target)
 
     # if using gcc >= 4.0 or clang >= 3.0 on a non-Windows platform, we must hide public symbols by default
     # (exported ones are explicitly marked)
-    if(NOT EGG_OS_WINDOWS AND ((EGG_COMPILER_GCC AND NOT EGG_GCC_VERSION VERSION_LESS "4") OR (EGG_COMPILER_CLANG AND NOT EGG_CLANG_VERSION VERSION_LESS "3")))
+    if(NOT EGG_OS_WINDOWS
+            AND ((EGG_COMPILER_GCC AND NOT EGG_GCC_VERSION VERSION_LESS "4")
+            OR (EGG_COMPILER_CLANG AND NOT EGG_CLANG_VERSION VERSION_LESS "3")))
         set_target_properties(${target} PROPERTIES COMPILE_FLAGS -fvisibility=hidden)
     endif()
 
@@ -101,7 +103,10 @@ macro(egg_add_library target)
 
         # adapt install directory to allow distributing dylibs/frameworks in user's frameworks/application bundle
         # but only if cmake rpath options aren't set
-        if(NOT CMAKE_SKIP_RPATH AND NOT CMAKE_SKIP_INSTALL_RPATH AND NOT CMAKE_INSTALL_RPATH AND NOT CMAKE_INSTALL_RPATH_USE_LINK_PATH AND NOT CMAKE_INSTALL_NAME_DIR)
+        if(NOT CMAKE_SKIP_RPATH AND NOT CMAKE_SKIP_INSTALL_RPATH
+                AND NOT CMAKE_INSTALL_RPATH
+                AND NOT CMAKE_INSTALL_RPATH_USE_LINK_PATH
+                AND NOT CMAKE_INSTALL_NAME_DIR)
             set_target_properties(${target} PROPERTIES INSTALL_NAME_DIR "@rpath")
             if(NOT CMAKE_SKIP_BUILD_RPATH)
                 if (CMAKE_VERSION VERSION_LESS 3.9)
@@ -225,7 +230,8 @@ function(egg_export_targets)
 
     set(config_package_location lib${LIB_SUFFIX}/cmake/EGG)
 
-    configure_package_config_file("${CURRENT_DIR}/EGGConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/EGGConfig.cmake"
+    configure_package_config_file("${CURRENT_DIR}/EGGConfig.cmake.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/EGGConfig.cmake"
         INSTALL_DESTINATION "${config_package_location}")
 
 
