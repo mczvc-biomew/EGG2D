@@ -29,7 +29,6 @@ endforeach ()
 list(APPEND EGG_FIND_COMPONENTS ${FIND_EGG_ADDITIONAL_COMPONENTS})
 list(REMOVE_DUPLICATES EGG_FIND_COMPONENTS)
 
-
 set(config_name "Static")
 
 set(targets_config_file "${CMAKE_CURRENT_LIST_DIR}/EGG${config_name}Targets.cmake")

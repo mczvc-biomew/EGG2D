@@ -2,11 +2,9 @@
 include(${PROJECT_SOURCE_DIR}/cmake/Macros.cmake)
 
 set(egg_glad egg2d.c
-        glad.c)
+             glad.c)
 
-set(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib")
-
-configure_file(glow_image.pcm ${CMAKE_CURRENT_BINARY_DIR}/glow_image.pcm COPYONLY)
+configure_file(glow_image.pcm ${PROJECT_BINARY_DIR}/share/glow_image.pcm COPYONLY)
 
 if (WIN32)
 else ()

@@ -1,5 +1,5 @@
-# Config for CMake.
-#
+# Platform and compiler config for CMake.
+
 # detect the os
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   set(EGG_OS_WINDOWS 1)

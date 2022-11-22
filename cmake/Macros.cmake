@@ -1,5 +1,32 @@
 include(CMakeParseArguments)
 
+# This little macro lets you set any Xcode specific property
+macro (egg_set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
+  set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
+endmacro ()
+
+# set the appropriate standard library on each platform for the given target
+# example: egg_set_stdlib(egg-system)
+function(egg_set_stdlib target)
+  # for gcc >= 4.0 on Windows, apply the EGG_USE_STATIC_STD_LIBS option if it is enabled
+  if(EGG_OS_WINDOWS AND EGG_COMPILER_GCC AND NOT EGG_GCC_VERSION VERSION_LESS "4")
+    if(EGG_USE_STATIC_STD_LIBS AND NOT EGG_COMPILER_GCC_TDM)
+      target_link_libraries(${target} PRIVATE "-static-libgcc" "-static-libstdc++")
+    elseif(NOT EGG_USE_STATIC_STD_LIBS AND EGG_COMPILER_GCC_TDM)
+      target_link_libraries(${target} PRIVATE "-shared-libgcc" "-shared-libstdc++")
+    endif()
+  endif()
+
+  if (EGG_OS_MACOSX)
+    if (${CMAKE_GENERATOR} MATCHES "Xcode")
+      egg_set_xcode_property(${target} CLANG_CXX_LIBRARY "libc++")
+    else()
+      target_compile_options(${target} PRIVATE "-stdlib=libc++")
+      target_link_libraries(${target} PRIVATE "-stdlib=libc++")
+    endif()
+  endif()
+endfunction()
+
 # add a new target which is a EGG library
 # ex: egg_add_library(egg-graphics
 #                       SOURCES sprite.cpp image.cpp ...
@@ -96,7 +123,7 @@ macro(egg_add_library target)
       set_target_properties(${target} PROPERTIES
               FRAMEWORK TRUE
               FRAMEWORK_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
-              MACOSX_FRAMEWORK_IDENTIFIER org.EGG-dev.${target}
+              MACOSX_FRAMEWORK_IDENTIFIER org.egg-dev.${target}
               MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
               MACOSX_FRAMEWORK_BUNDLE_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
     endif ()
